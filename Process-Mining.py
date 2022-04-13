@@ -6,12 +6,14 @@ from pm4py.algo.discovery.heuristics import algorithm as heuristics_miner
 from pm4py.visualization.heuristics_net import visualizer as hn_visualizer
 from pm4py.algo.discovery.inductive import algorithm as inductive_miner
 from pm4py.visualization.process_tree import visualizer as pt_visualizer
+import pandas as pd
 
-from dataviz import load_data, new_features
+from Beginning import load_data, new_features
 
 data = load_data()
 datalog = new_features(data)
-datalog.rename(columns={'date': 'time:timestamp','patient_id': 'case:concept:name', 'code': 'concept:name'}, inplace=True)
+datalog.rename(columns={'exe_soi_dtd': 'time:timestamp','patient_id': 'case:concept:name', 'category_cmi': 'concept:name'}, inplace=True)
+datalog = datalog[datalog["case:concept:name"]=='496']
 
 ## Convert to log format
 log = log_converter.apply(datalog)
@@ -21,7 +23,7 @@ net, initial_marking, final_marking = alpha_miner.apply(log)
 
 # Visualise this model as a petri net
 gviz1 = pn_visualizer.apply(net, initial_marking, final_marking)
-pn_visualizer.view(gviz1)
+#pn_visualizer.view(gviz1)
 
 # Visualise differently
 gviz2 = pn_visualizer.apply(net, initial_marking, final_marking,

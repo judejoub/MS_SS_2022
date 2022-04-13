@@ -18,13 +18,13 @@ print(f" Nombre de prestations de soins différentes : { len(list(data['code'].u
 
     # Infos sur les soins
 
-print(
+
 
     # histogramme, densité, boxplot soins sur la période 2009,2015
 
 x = list(data.groupby('patient_id',).count()["code"])
 print(f"Nombre de soins min,max : {min(x), max(x)}")
-plt.hist(x, color = 'blue', edgecolor = 'black', bins = int(2359/200))
+plt.hist(x, color = 'blue', edgecolor = 'black', bins = int(2359/50))
 plt.title('Histogramme du nombre de soins')
 plt.xlabel('Nombre de soins administrés sur la période')
 

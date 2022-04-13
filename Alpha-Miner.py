@@ -8,7 +8,7 @@ from Beginning import load_data, new_features
 
 data = load_data()
 datalog = new_features(data)
-datalog.rename(columns={'exe_soi_dtd': 'time:timestamp','patient_id': 'case:concept:name', 'code': 'concept:name'}, inplace=True)
+datalog.rename(columns={'exe_soi_dtd': 'time:timestamp','patient_id': 'case:concept:name', 'category_cmi': 'concept:name'}, inplace=True)
 datalog = datalog[datalog["case:concept:name"]=='496']
 ## Convert to log format
 log = log_converter.apply(datalog)
@@ -20,5 +20,5 @@ net, initial_marking, final_marking = alpha_miner.apply(log)
 gviz = pn_visualizer.apply(net, initial_marking, final_marking)
 pn_visualizer.view(gviz)
 
-#
+
 
