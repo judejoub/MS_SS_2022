@@ -68,7 +68,6 @@ def category_cmi(x):
     elif x[0] == 'U':
         return 22
 
-
 def new_features(data):
 
     data = data[["num_enq", "exe_soi_dtd", "code"]].copy()
@@ -99,7 +98,8 @@ def new_features(data):
     # Creation des groupes
 
     data['new_code_cmi'] = data['new_code_PHA'].apply(reduce_string)
-    data['category_cmi'] = data['new_code_cmi'].apply(category_cmi)
+    data["category_cmi"] = data["new_code_cmi"] + data["new_code_PMSI"]
+    data['category_cmi'] = data['category_cmi'].apply(category_cmi)
     data["category_cmi"] = data["category_cmi"].astype(str)
 
     return data
@@ -107,8 +107,7 @@ def new_features(data):
 
 data = pd.DataFrame(load_data())
 data = new_features(data).sort_values(by = 'exe_soi_dtd', ascending= True)
-print(data)
-
+print(data.category_cmi.dtypes)
 print(f'Nombre de ref PMSI dans dataframe : {data[data["new_code_PMSI"] !=""].shape[0]}')
 
 
